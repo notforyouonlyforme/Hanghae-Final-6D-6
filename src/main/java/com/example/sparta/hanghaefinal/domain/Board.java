@@ -1,5 +1,6 @@
 package com.example.sparta.hanghaefinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class Board extends Timestamped {
     private int view = 0;
     private boolean bookmark;
 
+    @JsonBackReference
     @OneToMany(
             mappedBy = "board",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},

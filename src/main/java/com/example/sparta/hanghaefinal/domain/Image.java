@@ -1,5 +1,6 @@
 package com.example.sparta.hanghaefinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +16,13 @@ public class Image extends Timestamped {
     @Column(name = "image_id")
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
 
     private String origFileName;
-
     private String filePath;
-
     private Long fileSize;
 
     @Builder
