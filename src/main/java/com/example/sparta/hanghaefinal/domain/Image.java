@@ -32,4 +32,11 @@ public class Image extends Timestamped {
         this.fileSize = fileSize;
     }
 
+    public void setBoard(Board board) {
+        this.board = board;
+        if (!board.getImages().contains(this)) {
+            board.getImages().add(this);
+        }
+    }
+
 }
