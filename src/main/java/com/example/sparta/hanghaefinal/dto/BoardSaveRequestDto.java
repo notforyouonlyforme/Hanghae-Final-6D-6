@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -18,6 +20,7 @@ public class BoardSaveRequestDto {
     private String nickname;
     private int view;
     private boolean bookmark;
+    private List<MultipartFile> images;
 //    private LocalDateTime createdAt;
 //    private LocalDateTime modifiedAt;
 

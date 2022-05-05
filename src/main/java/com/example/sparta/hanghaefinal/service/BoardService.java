@@ -5,6 +5,7 @@ import com.example.sparta.hanghaefinal.dto.BoardResponseDto;
 import com.example.sparta.hanghaefinal.dto.BoardSaveRequestDto;
 import com.example.sparta.hanghaefinal.dto.BoardUpdateRequestDto;
 import com.example.sparta.hanghaefinal.repository.BoardRepository;
+import com.example.sparta.hanghaefinal.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final ImageRepository imageRepository;
+
 
     @Transactional
     public BoardResponseDto saveBoard(BoardSaveRequestDto requestDto) {
