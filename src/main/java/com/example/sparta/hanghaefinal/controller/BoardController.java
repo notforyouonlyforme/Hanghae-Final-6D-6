@@ -43,8 +43,17 @@ public class BoardController {
         return boardService.saveBoard(requestDto, boardFileDto.getImages());
     }
 
+    //글, 파일 수정할 때
     @PatchMapping("/board/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardUpdateRequestDto requestDto) {
+    public BoardResponseDto updateBoard(@PathVariable Long id, BoardFileDto boardFileDto) {
+
+        //제목, 내용 변경
+        BoardUpdateRequestDto requestDto = BoardUpdateRequestDto.builder()
+                .title(boardFileDto.getTitle())
+                .contents(boardFileDto.getContents())
+                .build();
+        List<Image> dbImageList = file
+
         return boardService.updateBoard(id, requestDto);
     }
 

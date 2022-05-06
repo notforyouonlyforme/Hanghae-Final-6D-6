@@ -31,10 +31,5 @@ public class Comment extends Timestamped {
         this.contents = contents;
     }
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn("parent_id")
-//    private Comment parent;
-//
-//    @OneToMany(mappedBy = "parent", orphanRemoval = true)
-//    private List<Comment> children = new ArrayList<>();
+
 }

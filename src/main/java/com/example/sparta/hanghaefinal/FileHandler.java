@@ -1,6 +1,7 @@
 package com.example.sparta.hanghaefinal;
 
 import com.example.sparta.hanghaefinal.domain.Image;
+import com.example.sparta.hanghaefinal.dto.ImageDto;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;

@@ -1,4 +1,4 @@
-package com.example.sparta.hanghaefinal;
+package com.example.sparta.hanghaefinal.dto;
 
 import com.example.sparta.hanghaefinal.domain.Image;
 import lombok.Builder;
