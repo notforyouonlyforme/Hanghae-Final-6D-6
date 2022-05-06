@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentRequestDto {
+public class CommentSaveRequestDto {
     private String contents;
     private String nickname;
     private Board board;

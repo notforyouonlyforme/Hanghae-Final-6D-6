@@ -3,7 +3,7 @@ package com.example.sparta.hanghaefinal.controller;
 import com.example.sparta.hanghaefinal.domain.Board;
 import com.example.sparta.hanghaefinal.domain.Comment;
 import com.example.sparta.hanghaefinal.dto.CommentFileDto;
-import com.example.sparta.hanghaefinal.dto.CommentRequestDto;
+import com.example.sparta.hanghaefinal.dto.CommentSaveRequestDto;
 import com.example.sparta.hanghaefinal.repository.BoardRepository;
 import com.example.sparta.hanghaefinal.repository.CommentRepository;
 import com.example.sparta.hanghaefinal.service.CommentService;
@@ -25,12 +25,12 @@ public class CommentController {
         Board board = boardRepository.findById(boardId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
-        CommentRequestDto commentRequestDto = CommentRequestDto.builder()
+        CommentSaveRequestDto commentSaveRequestDto = CommentSaveRequestDto.builder()
                 .board(board)
                 .contents(fileDto.getContents())
                 .nickname(fileDto.getNickname())
                 .build();
-        commentService.saveComment(boardId, commentRequestDto, fileDto.getImages());
+        commentService.saveComment(boardId, commentSaveRequestDto, fileDto.getImages());
     }
 
     @PatchMapping("/{boardId}/comment/{commentId}")

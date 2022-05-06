@@ -4,7 +4,7 @@ import com.example.sparta.hanghaefinal.FileHandler;
 import com.example.sparta.hanghaefinal.domain.Board;
 import com.example.sparta.hanghaefinal.domain.Comment;
 import com.example.sparta.hanghaefinal.domain.Image;
-import com.example.sparta.hanghaefinal.dto.CommentRequestDto;
+import com.example.sparta.hanghaefinal.dto.CommentSaveRequestDto;
 import com.example.sparta.hanghaefinal.dto.CommentResponseDto;
 import com.example.sparta.hanghaefinal.repository.BoardRepository;
 import com.example.sparta.hanghaefinal.repository.CommentRepository;
@@ -25,7 +25,7 @@ public class CommentService {
     private final FileHandler fileHandler;
 
     @Transactional
-    public CommentResponseDto saveComment(Long boardId, CommentRequestDto requestDto, List<MultipartFile> images) throws Exception {
+    public CommentResponseDto saveComment(Long boardId, CommentSaveRequestDto requestDto, List<MultipartFile> images) throws Exception {
         Board board = boardRepository.findById(boardId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
