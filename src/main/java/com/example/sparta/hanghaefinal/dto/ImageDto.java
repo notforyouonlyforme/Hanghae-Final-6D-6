@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 public class ImageDto {
 
     private String origFileName;
-
     private String filePath;
-
     private Long fileSize;
 
     @Builder

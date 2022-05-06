@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class ImageResponseDto {
-    private Long imageId;
+    private Long id;
 
-    public ImageResponseDto(Image image) {
-        this.imageId = image.getId();
+    public ImageResponseDto (Image entity){
+        this.id = entity.getId();
     }
 }

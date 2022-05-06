@@ -44,4 +44,11 @@ public class Image extends Timestamped {
         }
     }
 
+    public void setComment(Comment comment) {
+        this.comment = comment;
+        if (!comment.getImages().contains(this)) {
+            comment.getImages().add(this);
+        }
+    }
+
 }
