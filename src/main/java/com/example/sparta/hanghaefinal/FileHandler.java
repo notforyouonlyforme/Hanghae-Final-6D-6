@@ -1,7 +1,9 @@
 package com.example.sparta.hanghaefinal;
 
+import com.example.sparta.hanghaefinal.domain.Board;
 import com.example.sparta.hanghaefinal.domain.Image;
 import com.example.sparta.hanghaefinal.dto.ImageDto;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -23,7 +25,7 @@ public class FileHandler {
 //        this.imageService = imageService;
 //    }
 
-    public List<Image> parseFileInfo(
+    public List<Image> parseFileInfo(Board board,
             List<MultipartFile> multipartFiles
     )throws Exception {
         // 반환할 파일 리스트
@@ -90,6 +92,10 @@ public class FileHandler {
                         imageDto.getFilePath(),
                         imageDto.getFileSize()
                 );
+
+                if (board.getId() != null) {
+                    image.setBoard(board);
+                }
 
                 // 생성 후 리스트에 추가
                 fileList.add(image);

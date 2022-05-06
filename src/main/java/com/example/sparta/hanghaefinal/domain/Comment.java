@@ -1,5 +1,6 @@
 package com.example.sparta.hanghaefinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,13 @@ public class Comment extends Timestamped {
 
     private String contents;
     private String nickname;
+    @JsonBackReference
+    @OneToMany(
+            mappedBy = "comment",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+    private List<Image> images = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "board_id")

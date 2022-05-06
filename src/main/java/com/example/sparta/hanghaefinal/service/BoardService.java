@@ -27,7 +27,7 @@ public class BoardService {
     public BoardResponseDto saveBoard(BoardSaveRequestDto requestDto,
                                       List<MultipartFile>images) throws Exception {
         Board board = boardRepository.save(requestDto.toEntity());
-        List<Image>imageList = fileHandler.parseFileInfo(images);
+        List<Image>imageList = fileHandler.parseFileInfo(board, images);
 
         if (!imageList.isEmpty()) {
             for (Image image : imageList) {
@@ -38,10 +38,17 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponseDto updateBoard(Long id, BoardUpdateRequestDto requestDto) {
+    public BoardResponseDto updateBoard(Long id, BoardUpdateRequestDto requestDto,
+                                        List<MultipartFile> images) throws Exception{
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
+        List<Image> imageList = fileHandler.parseFileInfo(board, images);
+        if (!imageList.isEmpty()) {
+            for (Image image : imageList) {
+                imageRepository.save(image);
+            }
+        }
         board.update(requestDto.getTitle(), requestDto.getContents());
         return new BoardResponseDto(board);
     }
@@ -53,6 +60,7 @@ public class BoardService {
         return new BoardResponseDto(board);
     }
 
+    //조회수
     @Transactional
     public int updateView(Long id) {
         return boardRepository.updateView(id);

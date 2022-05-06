@@ -21,6 +21,11 @@ public class Image extends Timestamped {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
     private String origFileName;
     private String filePath;
     private Long fileSize;

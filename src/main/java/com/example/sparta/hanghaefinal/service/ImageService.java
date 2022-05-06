@@ -32,12 +32,14 @@ public class ImageService {
     }
 
     //이미지 파일 전체 조회
-    public List<ImageResponseDto> findAllByBoard(Long boardId) {
+    public List<Image> findAllByBoard(Long boardId) {
         List<Image> imageList = imageRepository.findAllByBoardId(boardId);
 
-        return imageList.stream()
-                .map(ImageResponseDto::new)
-                .collect(Collectors.toList());
+        return imageList;
+    }
+
+    public void deleteImage(Long imageId) {
+        imageRepository.deleteById(imageId);
     }
 
 }
