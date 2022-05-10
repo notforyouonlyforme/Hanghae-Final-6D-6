@@ -12,4 +12,5 @@ public class HanghaeFinalApplication {
         SpringApplication.run(HanghaeFinalApplication.class, args);
     }
 
+
 }
