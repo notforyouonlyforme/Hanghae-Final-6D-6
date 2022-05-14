@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 public class PostController {
     private final PostService postService;
-    private final PostRepository postRepository;
 
     //게시글 목록 불러오기(유저 기준으로 반경 5km 이내의 게시글 필터링) 미구현
     @GetMapping("/api/post")

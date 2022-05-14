@@ -1,6 +1,8 @@
 package com.example.sparta.hanghaefinal.domain;
 
 import com.example.sparta.hanghaefinal.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +26,7 @@ import static javax.persistence.CascadeType.ALL;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Posts extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,8 +49,8 @@ public class Posts extends Timestamped {
     @Column(nullable = false)
     private String category;
 
-//    @ManyToMany(mappedBy = "post", cascade = ALL)
-//    private List<Hashtag> hashtag = new ArrayList<>();
+    @OneToMany(mappedBy = "posts")
+    List<PostToHashtag> tags = new ArrayList<>();
 
     @Column
     private Double latitude;
@@ -65,8 +68,6 @@ public class Posts extends Timestamped {
     public void addComment(Comments comment) {
         this.commentList.add(comment);
     }
-//   태그 연결 기능 추가
-//    public void addHashtag(Hashtag hashtag) {this.hashtag.add(hashtag);}
 
 
     @Builder

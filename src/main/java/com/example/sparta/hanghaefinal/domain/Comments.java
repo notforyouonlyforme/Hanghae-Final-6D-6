@@ -1,5 +1,7 @@
 package com.example.sparta.hanghaefinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +15,7 @@ import java.util.Optional;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Comments extends Timestamped {
 
     @Id @GeneratedValue

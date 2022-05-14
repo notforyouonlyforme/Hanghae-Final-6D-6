@@ -19,6 +19,7 @@ public class PostResponseDto {
     private String title;
     private String content;
     private String image;
+    private String link;
     private String category;
     private Double latitude;
     private Double longitude;
@@ -31,6 +32,7 @@ public class PostResponseDto {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.image = post.getImage();
+        this.link = post.getLink();
         this.category = post.getCategory();
         this.longitude = post.getLongitude();
         this.latitude = post.getLatitude();
