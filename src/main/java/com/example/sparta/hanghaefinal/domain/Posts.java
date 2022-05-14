@@ -1,6 +1,8 @@
 package com.example.sparta.hanghaefinal.domain;
 
 import com.example.sparta.hanghaefinal.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +26,7 @@ import static javax.persistence.CascadeType.ALL;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Posts extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,20 +43,22 @@ public class Posts extends Timestamped {
     @Column
     private String image;
 
-    @Column
-    private String link;
 
     @Column(nullable = false)
     private String category;
 
-//    @ManyToMany(mappedBy = "post", cascade = ALL)
-//    private List<Hashtag> hashtag = new ArrayList<>();
-
+//    이거 어케 해결함?;;
     @Column
+    List<String> tag = new ArrayList<>();
+
+    @Column(nullable = false)
     private Double latitude;
 
-    @Column
+    @Column(nullable = false)
     private Double longitude;
+
+    @Column(nullable = false)
+    private String location;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(nullable = false)
@@ -65,20 +70,18 @@ public class Posts extends Timestamped {
     public void addComment(Comments comment) {
         this.commentList.add(comment);
     }
-//   태그 연결 기능 추가
-//    public void addHashtag(Hashtag hashtag) {this.hashtag.add(hashtag);}
 
 
     @Builder
-    public Posts(String title, String content, String image, String link, String category, Double longitude, Double latitude, LocalDateTime expiredAt){
+    public Posts(String title, String content, String image, String category, Double longitude, Double latitude, LocalDateTime expiredAt, ArrayList<String> tag){
         this.title = title;
         this.content = content;
         this.image = image;
-        this.link = link;
         this.category = category;
         this.longitude = longitude;
         this.latitude = latitude;
         this.expiredAt = expiredAt;
+        this.tag = tag;
     }
 
     public void update(PostRequestDto requestDto){

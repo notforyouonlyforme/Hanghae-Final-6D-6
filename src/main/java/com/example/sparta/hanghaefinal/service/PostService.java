@@ -5,9 +5,14 @@ import com.example.sparta.hanghaefinal.advice.RestException;
 import com.example.sparta.hanghaefinal.domain.Posts;
 import com.example.sparta.hanghaefinal.dto.PostRequestDto;
 import com.example.sparta.hanghaefinal.dto.PostResponseDto;
+import com.example.sparta.hanghaefinal.dto.PostThumbnailDto;
 import com.example.sparta.hanghaefinal.dto.PostUpdateDto;
 import com.example.sparta.hanghaefinal.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -34,16 +39,16 @@ public class PostService {
 
 //    반경 쿼리만 작성하면 완료
     @Transactional
-    public List<PostResponseDto> findPosts(int pagingCnt) {
+    public List<PostThumbnailDto> findPosts(int pagingCnt, Double longitude, Double latitude) {
 
-//        Pageable pageRequest = PageRequest.of(pagingCnt, 10, Sort.by("createdAt").descending());
+        Pageable pageRequest = PageRequest.of(pagingCnt, 10, Sort.by("createdAt").descending());
 //        위치반경 내 필터링 하여 게시글 목록 불러오기(확실치 않음)--> 쿼리 에러뜨네;;
-        List<Posts> posts = postRepository.findPostsToUser(LocalDateTime.now());
+        Page<Posts> posts = postRepository.findPostsToUser(longitude, latitude);
 //        Page<Posts> posts = postRepository.findAll(pageRequest);
-        List<PostResponseDto> responseDto = new ArrayList<>();
+        List<PostThumbnailDto> responseDto = new ArrayList<>();
         for (Posts post : posts) {
-            PostResponseDto postResponseDto = new PostResponseDto(post);
-            responseDto.add(postResponseDto);
+            PostThumbnailDto postThumbnailDto = new PostThumbnailDto(post);
+            responseDto.add(postThumbnailDto);
         }
         return responseDto;
     }
@@ -58,12 +63,15 @@ public class PostService {
     }
 
     @Transactional
-    public void save(PostRequestDto requestDto) {
+    public void save(PostRequestDto requestDto, String nickname) {
+//        유저 DB 확인 후 수정
+//        Users result = userRepository.findByUsername(nickname).orElseThrow(
+//                () -> new RestException(HttpStatus.NOT_FOUND, "해당 username이 존재하지 않습니다.")
+//        );
         Posts post = Posts.builder()
                 .content(requestDto.getContent())
-                .image(requestDto.getImage())
+                .image(requestDto.getImagePath())
                 .category(requestDto.getCategory())
-                .link(requestDto.getLink())
                 .expiredAt(LocalDateTime.parse(requestDto.getExpiredAt(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")))
                 .title(requestDto.getTitle())
                 .build();

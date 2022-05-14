@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @ApiModel(value = "게시글 생성 요청")
@@ -29,7 +30,7 @@ public class PostRequestDto {
     private String content;
 
     @ApiModelProperty(hidden = true)
-    private String image;
+    private String imagePath;
 
     @ApiModelProperty(value = "카테고리", notes = "카테고리를 입력해주세요", required = true, example = "나눠먹어요")
     @NotEmpty(message = "카테고리를 입력해주세요.")
@@ -39,18 +40,19 @@ public class PostRequestDto {
     @NotNull
     private String expiredAt;
 
-    private String link;
-
-//    좌표를 여기서 받아야하는가?
-//    private Point location
+    private List<String> tag;
+//    좌표를 여기서 받아야하는가
+    @NotNull
+    private String location;
 
     @Builder
     public PostRequestDto(Posts post) {
     this.title = post.getTitle();
     this.content = post.getContent();
-    this.image = post.getImage();
+    this.imagePath = post.getImage();
+    this.tag = post.getTag();
     this.expiredAt = post.getExpiredAt().toString();
     this.category = post.getCategory();
-    this.link = post.getLink();
+    this.location = post.getLocation();
 }
 }
