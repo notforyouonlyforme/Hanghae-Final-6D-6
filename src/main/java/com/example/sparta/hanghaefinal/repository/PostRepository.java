@@ -16,12 +16,12 @@ public interface PostRepository extends JpaRepository<Posts, Long> {
     Page<Posts> findAll(Pageable pageable);
 
 //    위치 반경 내의 게시글 필터링
-//    String HAVERSINE_FORMULA = "(6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude)) *" +
-//        " cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude))))";
+    String HAVERSINE_FORMULA = "(6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude)) *" +
+        " cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude))))";
 
-    @Query(value = "SELECT p FROM Posts p WHERE p.category NOT LIKE '%나눔완료%' HAVING (6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude))" +
-            "cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude)))) < 5")
+    @Query(value = "SELECT p FROM Posts p WHERE p.category NOT LIKE '%나눔완료%' AND "+ HAVERSINE_FORMULA +" <= 5 ORDER BY "+ HAVERSINE_FORMULA +"DESC")
     Page<Posts> findPostsToUser(@Param("longitude") Double longitude, @Param("latitude") Double latitude);
+
 
     List<Posts> findAllByExpiredAtBefore(LocalDateTime now);
 

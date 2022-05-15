@@ -84,20 +84,29 @@ public class PostService {
     }
 
     @Transactional
-    public void modify(Long postId, PostRequestDto requestDto) {
+    public void modify(Long postId, PostRequestDto requestDto, String nickname) {
+
         Posts post = postRepository.findByPostId(postId).orElseThrow(
                 () -> new RestException(HttpStatus.NOT_FOUND, "해당 postId가 존재하지 않습니다.")
         );
 
-        post.update(requestDto);
+        if (post.getUser().getUsername().equals(nickname)) {
+            post.update(requestDto);
+        } else {
+            throw new RestException(HttpStatus.BAD_REQUEST, "username이 일치하지 않습니다.");
+        }
     }
 
     @Transactional
-    public void modify(Long postId, PostUpdateDto requestDto) {
+    public void modify(Long postId, PostUpdateDto requestDto, String nickname) {
         Posts post = postRepository.findByPostId(postId).orElseThrow(
                 () -> new RestException(HttpStatus.NOT_FOUND, "해당 postId가 존재하지 않습니다.")
         );
 
-        post.update(requestDto.getCategory());
+        if (post.getUser().getUsername().equals(nickname)) {
+            post.update(requestDto.getCategory());
+        } else {
+            throw new RestException(HttpStatus.BAD_REQUEST, "username이 일치하지 않습니다.");
+        }
     }
 }

@@ -33,6 +33,9 @@ public class Comments extends Timestamped {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne
+    private Users user;
+
     private boolean isRemoved= false;
 
 
@@ -42,10 +45,10 @@ public class Comments extends Timestamped {
 
 
     //== 연관관계 편의 메서드 ==//
-//    public void confirmWriter(Member writer) {
-//        this.writer = writer;
-//        writer.addComment(this);
-//    }
+    public void confirmWriter(Users writer) {
+        this.writer = writer;
+        writer.addComment(this);
+    }
 
     public void confirmPost(Posts post) {
         this.post = post;

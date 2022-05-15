@@ -19,17 +19,19 @@ public class CommentResponseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private List<CommentResponseDto> children;
     private boolean deleted;
+    private String writer;
 
 
-    public CommentResponseDto(Long id, String content) {
+    public CommentResponseDto(Long id, String content, String writer) {
         this.commentId = id;
+        this.writer = writer;
         this.content = content;
     }
 
     public static CommentResponseDto convertCommentToDto(Comments comment) {
         return comment.isRemoved() == true ?
-                new CommentResponseDto(comment.getCommentId(), "삭제된 댓글입니다.") :
-                new CommentResponseDto(comment.getCommentId(), comment.getContent());
+                new CommentResponseDto(comment.getCommentId(), "삭제된 댓글입니다.", null) :
+                new CommentResponseDto(comment.getCommentId(), comment.getContent(), comment.getUser().getNickname());
     }
 
 }

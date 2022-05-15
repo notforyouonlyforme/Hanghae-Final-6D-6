@@ -47,7 +47,6 @@ public class Posts extends Timestamped {
     @Column(nullable = false)
     private String category;
 
-//    이거 어케 해결함?;;
     @Column
     List<String> tag = new ArrayList<>();
 
@@ -66,6 +65,9 @@ public class Posts extends Timestamped {
 
     @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
     private List<Comments> commentList = new ArrayList<>();
+
+    @ManyToOne
+    private Users user;
 
     public void addComment(Comments comment) {
         this.commentList.add(comment);
@@ -87,7 +89,7 @@ public class Posts extends Timestamped {
     public void update(PostRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.image = requestDto.getImage();
+        this.image = requestDto.getImagePath();
         this.category = requestDto.getCategory();
         this.expiredAt = LocalDateTime.parse(requestDto.getExpiredAt(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
     }

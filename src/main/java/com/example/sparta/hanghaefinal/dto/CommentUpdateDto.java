@@ -15,9 +15,9 @@ public class CommentUpdateDto {
         this.content = content;
     }
 
-    public static CommentResponseDto convertCommentToDto(Comments comment) {
+    public static CommentUpdateDto convertCommentToDto(Comments comment) {
         return comment.isRemoved() == true ?
-                new CommentResponseDto(comment.getCommentId(), "삭제된 댓글입니다.") :
-                new CommentResponseDto(comment.getCommentId(), comment.getContent());
+                new CommentUpdateDto(comment.getCommentId(), "삭제된 댓글입니다.") :
+                new CommentUpdateDto(comment.getCommentId(), comment.getContent());
     }
 }

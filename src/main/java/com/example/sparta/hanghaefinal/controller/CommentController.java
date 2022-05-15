@@ -18,7 +18,7 @@ public class CommentController {
 
     @PostMapping("/api/comment/{postId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Success> commentSave(@PathVariable("postId") Long postId, @RequestBody CommentRequestDto requestDto){
+    public ResponseEntity<Success> commentSave(@PathVariable("postId") Long postId, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal Users user){
         commentService.save(postId, requestDto);
         return new ResponseEntity<>(new Success(true, "댓글 달기 성공"), HttpStatus.OK);
     }
